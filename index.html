@@ -1,0 +1,89 @@
+<html>
+<head>
+	<title>HOLMS</title>
+</head>
+<body>
+	<script src="annyang.min.js"></script>
+	<script src="jquery-1.11.3.min.js"></script>
+	<script>
+	var existingUser = ['master'];
+	var user = "unrecognize";
+	var lastAction = null; // create an of functino for each command
+	if (annyang) {
+	  // Let's define our first command. First the text we expect, and then the function it should call
+	  var commands = {
+	    "(*term) Home version":function(){
+	    	console.info('calling : speak ...');
+			var msg = new SpeechSynthesisUtterance(
+				"HOME system version 0.0.1"
+				);
+			window.speechSynthesis.speak(msg);
+	    },
+	    "(*term) Home":function(){
+	    	console.info('calling : speak ...');
+			var msg = new SpeechSynthesisUtterance(
+				"Yes Sir ?"
+				);
+			window.speechSynthesis.speak(msg);
+	    },
+	    "what's your name":function(){
+	    	console.info('starting : speak ...');
+			var msg = new SpeechSynthesisUtterance(
+				"I'm HOME. A computer system created to help you managing your home"
+				);
+			window.speechSynthesis.speak(msg);
+	    },
+	    '(*term) speak':function(){
+	    	console.info('starting : speak ...');
+			var msg = new SpeechSynthesisUtterance(
+				'Hello Sir!, I\'m HOME, your own computer system speaking ! I\'exist to help you creating your own universe.'
+				);
+			window.speechSynthesis.speak(msg);
+	    },
+	    '(*term)  what time is it':function(){
+	    	console.info('starting : ge time ...');
+    		var date = new Date();
+			var msg = new SpeechSynthesisUtterance(
+				"it's " + date.toUTCString()
+				);
+			window.speechSynthesis.speak(msg);
+	    },
+	    '(*term) reload':function(){
+	    	console.info('Reloading the page');
+	    	window.location.reload();
+	    },
+	    "(*term) who am I":function(){
+	    	console.info('Identiying : speak ...');
+			var msg = new SpeechSynthesisUtterance(
+				"User identify as ." + user
+				);
+			window.speechSynthesis.speak(msg);
+	    },
+	  	"identify as *login":function(login){
+	    	console.info('Identiying : speak ...');
+	    	console.log('submited : ' + login);
+	    	if(existingUser.indexOf(login) != -1){
+	    		user = login;
+				var msg = new SpeechSynthesisUtterance(
+					"User identify as " + user
+					);
+				window.speechSynthesis.speak(msg);
+	    	}
+	    	else{
+				var msg = new SpeechSynthesisUtterance(
+					"User unrecognize"
+					);
+				window.speechSynthesis.speak(msg);	
+	    	}
+	    },
+	  };
+	var msg = new SpeechSynthesisUtterance(
+		'u'
+		);
+	// window.speechSynthesis.speak(msg);
+	  annyang.addCommands(commands);
+	  annyang.start();
+	}
+	</script>
+</body>
+</html>
